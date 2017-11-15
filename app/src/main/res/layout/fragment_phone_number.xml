@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="@dimen/activity_margin">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_large"
+        android:text="@string/new_number_copy"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_margin="@dimen/activity_margin_large"
+        android:weightSum="1">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:background="@drawable/white_box"
+            android:id="@+id/phone_number"
+            android:gravity="center"
+            android:textSize="@dimen/text_xlarge"
+            android:textColor="@android:color/white"
+            android:padding="@dimen/activity_margin"
+            android:inputType="phone"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+        </EditText>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/done"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@android:color/white"
+        android:id="@+id/done_button"/>
+
+</LinearLayout>

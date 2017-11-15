@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/activity_margin_large"
+        android:layout_marginBottom="@dimen/activity_margin_large"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:id="@+id/temp_increment"
+                android:textSize="@dimen/text_xlarge"
+                android:textColor="@android:color/white"
+                android:text="@string/plus"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/activity_margin_large"
+                android:id="@+id/temp_text"
+                android:textSize="@dimen/text_xlarge"
+                android:textColor="@android:color/white"
+                android:background="@drawable/white_box"
+                android:gravity="center"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:id="@+id/temp_decrement"
+                android:textSize="@dimen/text_xlarge"
+                android:textColor="@android:color/white"
+                android:text="@string/minus"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:id="@+id/pressure_increment"
+                android:textSize="@dimen/text_xlarge"
+                android:textColor="@android:color/white"
+                android:text="@string/plus"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/activity_margin_large"
+                android:id="@+id/pressure_text"
+                android:textSize="@dimen/text_xlarge"
+                android:textColor="@android:color/white"
+                android:background="@drawable/white_box"
+                android:gravity="center"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:id="@+id/pressure_decrement"
+                android:textSize="@dimen/text_xlarge"
+                android:textColor="@android:color/white"
+                android:text="@string/minus"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:id="@+id/time_increment"
+                android:textSize="@dimen/text_xlarge"
+                android:textColor="@android:color/white"
+                android:text="@string/plus"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/activity_margin_large"
+                android:id="@+id/time_text"
+                android:textSize="@dimen/text_xlarge"
+                android:textColor="@android:color/white"
+                android:background="@drawable/white_box"
+                android:gravity="center"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:id="@+id/time_decrement"
+                android:textSize="@dimen/text_xlarge"
+                android:textColor="@android:color/white"
+                android:text="@string/minus"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        style="@style/DarkButtonTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/start_brew"
+        android:paddingLeft="@dimen/activity_margin"
+        android:paddingRight="@dimen/activity_margin"
+        android:text="@string/start_brew"/>
+
+</LinearLayout>
