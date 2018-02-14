@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.ubru.brurista.R;
 import com.ubru.brurista.UserActivity;
+import com.ubru.brurista.TcpClient;
+import com.ubru.brurista.ConnectTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,6 +46,7 @@ public class DrinkParametersFragment extends UserFragment {
         rootView.findViewById(R.id.start_brew).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // TCP communication to RPi
                 getParent().pageTo(UserActivity.BREWING_FRAGMENT);
             }
         });
