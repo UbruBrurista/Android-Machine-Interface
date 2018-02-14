@@ -49,10 +49,6 @@ public class UserActivity extends AppCompatActivity {
     private int brewTime;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
 
     @Override
