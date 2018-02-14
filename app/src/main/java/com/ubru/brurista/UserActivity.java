@@ -27,6 +27,10 @@ import com.ubru.brurista.fragments.NewPhoneFragment;
 import com.ubru.brurista.fragments.PhoneNumberFragment;
 import com.ubru.brurista.fragments.UserFragment;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
@@ -42,11 +46,14 @@ public class UserActivity extends AppCompatActivity {
     public static final int PHONE_NUMBER_FRAGMENT = 5;
 
     public static final String EXTRA_STARTING_PAGE = "com.ubru.brurista.EXTRA_STARTING_PAGE";
+    public static final String EXTRA_JSON = "com.ubru.brurista.EXTRA_JSON";
+
 
     private int brewType;
     private int brewTemp;
     private int brewPressure;
     private int brewTime;
+    private JSONArray brews;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -70,8 +77,31 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
-        int startPage = getIntent().getExtras().getInt(EXTRA_STARTING_PAGE, 0);
+
+        Bundle extras = getIntent().getExtras();
+        int startPage = extras.getInt(EXTRA_STARTING_PAGE, 0);
+        String json = extras.getString(EXTRA_JSON, "");
+        if (!json.isEmpty() && !json.equals(null)) {
+            try {
+                brews = new JSONArray(json);
+                System.out.println(brews.get(0));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         mViewPager.setCurrentItem(startPage, false);
+    }
+
+    public List<JSONObject> getBrews() {
+        List<JSONObject> brewsObjects = new ArrayList<>();
+        for (int i = 0; i < brews.length(); i++) {
+            try {
+                brewsObjects.add(brews.getJSONObject(i));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return brewsObjects;
     }
 
     public void pageTo(int item) {
