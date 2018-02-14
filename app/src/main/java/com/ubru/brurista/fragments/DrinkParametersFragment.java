@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.ubru.brurista.R;
 import com.ubru.brurista.UserActivity;
 import com.ubru.brurista.TcpClient;
-import com.ubru.brurista.ConnectTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,5 +81,7 @@ public class DrinkParametersFragment extends UserFragment {
             }
         });
     }
+
+
 
 }
