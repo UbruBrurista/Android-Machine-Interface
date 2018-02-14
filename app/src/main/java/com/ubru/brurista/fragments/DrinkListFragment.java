@@ -77,12 +77,9 @@ public class DrinkListFragment extends UserFragment {
                 v = (TextView) vi.inflate(android.R.layout.simple_list_item_1, null);
             }
 
-            System.out.println(v.getLayoutParams());
-
             v.setLayoutParams(new ListView.LayoutParams(
                     ListView.LayoutParams.MATCH_PARENT,ListView.LayoutParams.WRAP_CONTENT));
             v.setText(this.drinks.get(position));
-            System.out.println(this.drinks.get(position));
             v.setTextColor(Color.WHITE);
 
             v.setOnClickListener(new View.OnClickListener() {
