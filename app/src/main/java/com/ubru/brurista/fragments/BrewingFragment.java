@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ubru.brurista.BluetoothDriver;
+import com.ubru.brurista.ConnectTask;
 import com.ubru.brurista.R;
+import com.ubru.brurista.TcpClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.TimerTask;
 
 public class BrewingFragment extends UserFragment {
 
+    TcpClient mTcpClient;
     private Timer timer;
     private String message = "test1";
     private TimerTask timerTask = new TimerTask() {
@@ -40,6 +43,15 @@ public class BrewingFragment extends UserFragment {
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                new ConnectTask().execute("");
+
+                //sends the message to the server
+                if (mTcpClient != null) {
+                    mTcpClient.sendMessage("drink");
+                }
+
+
                 if (timer != null) {
                     timer.cancel();
                 }

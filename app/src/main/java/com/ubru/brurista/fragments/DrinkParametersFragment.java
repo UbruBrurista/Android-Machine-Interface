@@ -18,8 +18,6 @@ import com.ubru.brurista.ConnectTask;
  */
 public class DrinkParametersFragment extends UserFragment {
 
-    TcpClient mTcpClient;
-
     private int[] parameterValues = {93, 9, 30};
     private int[] parameterDeltas = {1, 1, 1};
     private int[] parameterUnits = {
@@ -49,13 +47,6 @@ public class DrinkParametersFragment extends UserFragment {
             @Override
             public void onClick(View view) {
                 // TCP communication to RPi
-                new ConnectTask().execute("");
-
-                //sends the message to the server
-                if (mTcpClient != null) {
-                    mTcpClient.sendMessage("drink");
-                }
-
                 getParent().pageTo(UserActivity.BREWING_FRAGMENT);
             }
         });
