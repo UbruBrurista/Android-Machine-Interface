@@ -18,34 +18,23 @@ import android.widget.TextView;
 import com.ubru.brurista.R;
 import com.ubru.brurista.UserActivity;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class DrinkListFragment extends UserFragment {
 
-    final private List<String> dummyData = new ArrayList<>();
-
-    public DrinkListFragment() {
-        dummyData.add("Awesome Espresso");
-        dummyData.add("Not so awesome Espresso");
-        dummyData.add("Awesome Espresso");
-        dummyData.add("Not so awesome Espresso");
-        dummyData.add("VINAY");
-        dummyData.add("Awesome Espresso");
-        dummyData.add("Not so awesome Espresso");
-        dummyData.add("Awesome Espresso");
-        dummyData.add("Not so awesome Espresso");
-        dummyData.add("Awesome Espresso");
-        dummyData.add("Not so awesome Espresso");
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_drink_list, container, false);
         ListView list = rootView.findViewById(R.id.drink_list_view);
+        List<JSONObject> brews = getParent().getBrews();
         list.setAdapter(new DrinkListAdapter(
-                this.getContext(), android.R.layout.simple_list_item_1, this.dummyData));
+                this.getContext(), android.R.layout.simple_list_item_1, brews));
 
         Button customDrink = rootView.findViewById(R.id.custom_drink_button);
         customDrink.setOnClickListener(new View.OnClickListener() {
@@ -59,11 +48,11 @@ public class DrinkListFragment extends UserFragment {
         return rootView;
     }
 
-    private class DrinkListAdapter extends ArrayAdapter<String> {
+    private class DrinkListAdapter extends ArrayAdapter<JSONObject> {
 
-        List<String> drinks;
+        List<JSONObject> drinks;
 
-        public DrinkListAdapter(Context context, int resource, List<String> objects) {
+        public DrinkListAdapter(Context context, int resource, List<JSONObject> objects) {
             super(context, resource, objects);
             this.drinks = objects;
         }
@@ -79,7 +68,7 @@ public class DrinkListFragment extends UserFragment {
 
             v.setLayoutParams(new ListView.LayoutParams(
                     ListView.LayoutParams.MATCH_PARENT,ListView.LayoutParams.WRAP_CONTENT));
-            v.setText(this.drinks.get(position));
+            v.setText(this.drinks.get(position).optString("name"));
             v.setTextColor(Color.WHITE);
 
             v.setOnClickListener(new View.OnClickListener() {
