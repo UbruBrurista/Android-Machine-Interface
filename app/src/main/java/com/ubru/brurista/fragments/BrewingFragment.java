@@ -43,6 +43,7 @@ public class BrewingFragment extends UserFragment {
                 if (timer != null) {
                     timer.cancel();
                 }
+
                 getActivity().finish();
             }
         });
