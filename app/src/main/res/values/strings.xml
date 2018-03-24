@@ -20,6 +20,6 @@
     <string name="unit_seconds">%1$ds</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="pi_ip_address">192.168.1.8</string>
+    <string name="pi_ip_address">127.0.0.1</string>
 
 </resources>

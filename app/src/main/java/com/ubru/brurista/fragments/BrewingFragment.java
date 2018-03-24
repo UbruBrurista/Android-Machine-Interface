@@ -51,7 +51,13 @@ public class BrewingFragment extends UserFragment {
                     publishProgress(message);
                 }
             });
+            System.out.println("before run");
+
+
             mTcpClient.run();
+
+            System.out.println("after run");
+
 
             return null;
         }
