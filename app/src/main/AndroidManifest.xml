@@ -7,7 +7,9 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <permission android:name="android.permission.BLUETOOTH" android:label="BLUETOOTH" />
+    <permission
+        android:name="android.permission.BLUETOOTH"
+        android:label="BLUETOOTH" />
     <permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
@@ -23,10 +25,20 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <!-- <category android:name="android.intent.category.IOT_LAUNCHER" /> -->
+                <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+            </intent-filter>
         </activity>
         <activity
             android:name=".UserActivity"
             android:label="@string/title_activity_user"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".UtilityActivity"
+            android:label="@string/title_activity_utility"
             android:theme="@style/AppTheme"></activity>
     </application>
 

@@ -25,13 +25,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Hide the status bar.
+//         Hide the status bar.
 //        View decorView = getWindow().getDecorView();
 //        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
 //        decorView.setSystemUiVisibility(uiOptions);
-        final RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-        final String url ="http://buakpsi.com/ubru/drinks/uuid/12345";
 
+        UARTDriver.init();
+
+        final RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+        final String url = "http://buakpsi.com/ubru/drinks/uuid/12345";
 
         findViewById(R.id.phone_tap).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +66,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startUserActivity(UserActivity.DRINK_LIST_FRAGMENT, null);
+            }
+        });
+
+        findViewById(R.id.utility_mode_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, UtilityActivity.class);
+                startActivity(intent);
             }
         });
     }

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.ubru.brurista.MainActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="3"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:weightSum="3"
+        android:orientation="horizontal">
+
+        <Button
+            style="@style/DarkButtonTheme"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:id="@+id/test_1"
+            android:text="Run Full Cycle"
+            android:onClick="test1"/>
+
+        <Button
+            style="@style/DarkButtonTheme"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:id="@+id/test_2"
+            android:text="Go Home"
+            android:onClick="test2"/>
+
+        <Button
+            style="@style/DarkButtonTheme"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:id="@+id/test_3"
+            android:text="Go Work"
+            android:onClick="test3"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:weightSum="3"
+        android:orientation="horizontal">
+
+        <Button
+            style="@style/DarkButtonTheme"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:id="@+id/test_4"
+            android:text="Test 4"
+            android:onClick="test4"/>
+
+        <Button
+            style="@style/DarkButtonTheme"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:id="@+id/test_5"
+            android:text="Test 5"
+            android:onClick="test5"/>
+
+        <Button
+            style="@style/DarkButtonTheme"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:id="@+id/test_6"
+            android:text="Test 6"
+            android:onClick="test6"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:weightSum="3"
+        android:orientation="horizontal">
+
+        <Button
+            style="@style/DarkButtonTheme"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:id="@+id/test_7"
+            android:text="Test 7"
+            android:onClick="test7"/>
+
+        <Button
+            style="@style/DarkButtonTheme"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:id="@+id/test_8"
+            android:text="Test 8"
+            android:onClick="test8"/>
+
+        <Button
+            style="@style/DarkButtonTheme"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:id="@+id/test_9"
+            android:text="Test 9"
+            android:onClick="test9"/>
+
+    </LinearLayout>
+
+</LinearLayout>
