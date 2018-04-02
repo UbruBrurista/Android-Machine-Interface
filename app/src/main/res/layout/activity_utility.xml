@@ -63,7 +63,7 @@
             android:layout_weight="1"
             android:layout_margin="8dp"
             android:id="@+id/test_4"
-            android:text="Test 4"
+            android:text="Run Grinder"
             android:onClick="test4"/>
 
         <Button
@@ -73,7 +73,7 @@
             android:layout_weight="1"
             android:layout_margin="8dp"
             android:id="@+id/test_5"
-            android:text="Test 5"
+            android:text="Run Pump"
             android:onClick="test5"/>
 
         <Button
@@ -122,7 +122,8 @@
             android:layout_weight="1"
             android:layout_margin="8dp"
             android:id="@+id/test_9"
-            android:text="Test 9"
+            android:background="@android:color/holo_red_dark"
+            android:text="DISABLE ALL"
             android:onClick="test9"/>
 
     </LinearLayout>

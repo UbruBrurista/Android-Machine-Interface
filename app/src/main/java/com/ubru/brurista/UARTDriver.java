@@ -18,9 +18,12 @@ public class UARTDriver {
     private static UartDevice mArduino;
 
     public static class Commands {
-        public static byte[] START_FULL_CYCLE = {1, '\n'};
-        public static byte[] GO_HOME = {2, '\n'};
-        public static byte[] GO_WORK = {3, '\n'};
+        public static byte[] START_FULL_CYCLE = {1};
+        public static byte[] GO_HOME = {2};
+        public static byte[] GO_WORK = {3};
+        public static byte[] GRIND = {4};
+        public static byte[] PUMP = {5};
+        public static byte[] DISABLE_ALL = {100};
     }
 
     public static void init() {

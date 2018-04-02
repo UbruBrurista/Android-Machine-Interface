@@ -21,9 +21,9 @@ public class UtilityActivity extends AppCompatActivity {
 
     public void test3(View v) { UARTDriver.sendCommand(UARTDriver.Commands.GO_WORK); }
 
-    public void test4(View v) { }
+    public void test4(View v) { UARTDriver.sendCommand(UARTDriver.Commands.GRIND);}
 
-    public void test5(View v) { }
+    public void test5(View v) { UARTDriver.sendCommand(UARTDriver.Commands.PUMP );}
 
     public void test6(View v) { }
 
@@ -31,6 +31,6 @@ public class UtilityActivity extends AppCompatActivity {
 
     public void test8(View v) { }
 
-    public void test9(View v) { }
+    public void test9(View v) { UARTDriver.sendCommand(UARTDriver.Commands.DISABLE_ALL);}
 
 }

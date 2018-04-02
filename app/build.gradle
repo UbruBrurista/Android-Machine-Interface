@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.ubru.brurista"
-        minSdkVersion 19
+        minSdkVersion 24
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -31,4 +31,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.android.volley:volley:1.0.0'
     compileOnly 'com.google.android.things:androidthings:+'
+    compile 'com.galarzaa.android-things:rc522:0.3.0'
 }
