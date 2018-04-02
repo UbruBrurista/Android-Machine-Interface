@@ -1,11 +1,17 @@
 package com.ubru.brurista;
 
+import android.content.Context;
+import android.hardware.usb.UsbManager;
+import android.hardware.usb.UsbDevice;
+
+
 import com.google.android.things.pio.PeripheralManager;
 import com.google.android.things.pio.UartDevice;
 
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Vinay on 3/28/18.
@@ -29,10 +35,22 @@ public class UARTDriver {
     public static void init() {
         mPeripheralManager = PeripheralManager.getInstance();
 
+       /* See available devices */
+      /* List<String> deviceList = mPeripheralManager.getUartDeviceList();
+        if (deviceList.isEmpty()) {
+            System.out.println("No device");
+        } else {
+            System.out.println("------> Available devices: ");
+          for (String s : deviceList) {
+                System.out.println(s);
+             }
+        }*/
+
+
         try {
-            mArduino = mPeripheralManager.openUartDevice("UART0");
+            mArduino = mPeripheralManager.openUartDevice("MINIUART");
             mArduino.setBaudrate(BAUD_RATE);
-            System.out.println("Connected to " + mArduino.getName());
+            System.out.println("------> Connected to " + mArduino.getName());
         } catch (IOException e) {
             System.err.println("Could not connect!");
             e.printStackTrace();
