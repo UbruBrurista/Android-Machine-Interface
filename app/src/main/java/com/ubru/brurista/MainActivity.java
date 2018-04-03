@@ -29,6 +29,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    final String BASE_URL = "http://buakpsi.com/ubru/drinks/uuid/";
+    RFIDTask task;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,29 +43,6 @@ public class MainActivity extends AppCompatActivity {
 //        decorView.setSystemUiVisibility(uiOptions);
 
         UARTDriver.init();
-
-        final RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-        final String url = "http://buakpsi.com/ubru/drinks/uuid/12345";
-
-        findViewById(R.id.phone_tap).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                startUserActivity(UserActivity.DRINK_LIST_FRAGMENT, response);
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        return;
-                    }
-                });
-                queue.add(stringRequest);
-
-            }
-        });
 
         findViewById(R.id.new_user_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,8 +66,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        RFIDTask task = new RFIDTask();
+        task = new RFIDTask();
         task.execute();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (task != null)
+            task.cancel(true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (task != null)
+            task.cancel(true);
+
+        task = new RFIDTask();
+        task.execute();
+
     }
 
     private void startUserActivity(int page, String json) {
@@ -97,75 +95,85 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private class RFIDTask extends AsyncTask <Void, Void, Void> {
+    private void getUserDrinks(String uid) {
+        final RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+        String url = BASE_URL + uid;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        startUserActivity(UserActivity.DRINK_LIST_FRAGMENT, response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {}
+        });
+        queue.add(stringRequest);
+    }
 
-        private RFIDDevice mRc522;
+    private class RFIDTask extends AsyncTask <Void, Void, String> {
+
+        private RFIDDevice mDevice;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             PeripheralManager pioService = PeripheralManager.getInstance();
             try {
-                PeripheralManager manager = PeripheralManager.getInstance();
-                List<String> deviceList = manager.getSpiBusList();
-                if (deviceList.isEmpty()) {
-                    System.out.println("No SPI bus available on this device.");
-                } else {
-                    System.out.println("List of available devices: " + deviceList);
-                }
-
-            /* Names based on Raspberry Pi 3 */
                 SpiDevice spiDevice = pioService.openSpiDevice("SPI0.0");
                 System.out.println(spiDevice);
 
                 Gpio resetPin = pioService.openGpio("BCM25");
-                mRc522 = new RFIDDevice(spiDevice, resetPin);
+                mDevice = new RFIDDevice(spiDevice, resetPin);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("PreExecute complete");
-
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected String doInBackground(Void... voids) {
             while(true){
-                boolean success = mRc522.request();
+                boolean success = mDevice.request();
                 if(!success){
                     continue;
                 }
-                success = mRc522.antiCollisionDetect();
+
+                success = mDevice.antiCollisionDetect();
                 if(!success){
                     continue;
                 }
-                byte[] uid = mRc522.getUid();
-                    System.out.println(RFIDDevice.dataToHexString(uid));
-                mRc522.selectTag(uid);
-                System.out.println(mRc522.dumpMifare1k());
+
+                byte[] uid = mDevice.getUid();
+                return RFIDDevice.dataToHexString(uid);
 
 
-                byte[] key = {(byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF};
-                byte block = Rc522.getBlockAddress(1,1);
-                boolean result = mRc522.authenticateCard(Rc522.AUTH_A, block, key);
-                if (!result) {
-                    //Authentication failed
-                    System.out.println("Authenticaation failed");
-                    return null;
-                }
-                //Buffer to hold read data
-                byte[] buffer = new byte[16];
-                //Since we're still using the same block, we don't need to authenticate again
-                result = mRc522.readBlock(block, buffer);
-                if(!result){
-                    //Could not read card
-                    return null;
-                }
-                //Stop crypto to allow subsequent readings
-                mRc522.stopCrypto();
-
-                break;
+//                mDevice.selectTag(uid);
+//                System.out.println(mDevice.dumpMifare1k());
+//                byte[] key = {(byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF};
+//                byte block = Rc522.getBlockAddress(1,1);
+//                boolean result = mDevice.authenticateCard(Rc522.AUTH_A, block, key);
+//                if (!result) {
+//                    //Authentication failed
+//                    System.out.println("Authenticaation failed");
+//                    return null;
+//                }
+//                //Buffer to hold read data
+//                byte[] buffer = new byte[16];
+//                //Since we're still using the same block, we don't need to authenticate again
+//                result = mDevice.readBlock(block, buffer);
+//                if(!result){
+//                    //Could not read card
+//                    return null;
+//                }
+//                //Stop crypto to allow subsequent readings
+//                mDevice.stopCrypto();
             }
-            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String uid) {
+            super.onPostExecute(uid);
+            MainActivity.this.getUserDrinks(uid);
         }
     }
 

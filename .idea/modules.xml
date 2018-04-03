@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://C:\Users\zwoo18\Desktop\Android-Machine-Interface\Android.iml" filepath="C:\Users\zwoo18\Desktop\Android-Machine-Interface\Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/Android-Machine-Interface.iml" filepath="$PROJECT_DIR$/Android-Machine-Interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Android-Machine-Interface.iml" filepath="$PROJECT_DIR$/Android-Machine-Interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

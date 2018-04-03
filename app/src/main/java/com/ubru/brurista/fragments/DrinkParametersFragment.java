@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.ubru.brurista.R;
 import com.ubru.brurista.UserActivity;
-import com.ubru.brurista.TcpClient;
 
 /**
  * A simple {@link Fragment} subclass.
