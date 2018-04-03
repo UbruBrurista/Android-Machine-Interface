@@ -17,7 +17,7 @@ public class BrewingFragment extends UserFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_brewing, container, false);
 
-        UARTDriver.sendCommand(UARTDriver.Commands.START_FULL_CYCLE);
+//        UARTDriver.sendCommand(UARTDriver.Commands.START_FULL_CYCLE);
 
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override

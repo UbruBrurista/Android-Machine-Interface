@@ -29,7 +29,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    final String BASE_URL = "http://buakpsi.com/ubru/drinks/uuid/";
+    final String BASE_URL = "http://ubru.us-east-1.elasticbeanstalk.com/drinks/uuid/";
     RFIDTask task;
 
     @Override
@@ -61,13 +61,11 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.utility_mode_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("hello");
                 Intent intent = new Intent(MainActivity.this, UtilityActivity.class);
                 startActivity(intent);
             }
         });
-
-        task = new RFIDTask();
-        task.execute();
     }
 
     @Override
@@ -83,7 +81,13 @@ public class MainActivity extends AppCompatActivity {
         if (task != null)
             task.cancel(true);
 
-        task = new RFIDTask();
+        task = new RFIDTask() {
+            @Override
+            void postExecuteCallback(String uid) {
+                System.out.println(uid);
+                getUserDrinks(uid);
+            }
+        };
         task.execute();
 
     }
@@ -98,10 +102,12 @@ public class MainActivity extends AppCompatActivity {
     private void getUserDrinks(String uid) {
         final RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         String url = BASE_URL + uid;
+        System.out.println(url);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        System.out.println(response);
                         startUserActivity(UserActivity.DRINK_LIST_FRAGMENT, response);
                     }
                 }, new Response.ErrorListener() {
@@ -109,72 +115,6 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {}
         });
         queue.add(stringRequest);
-    }
-
-    private class RFIDTask extends AsyncTask <Void, Void, String> {
-
-        private RFIDDevice mDevice;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            PeripheralManager pioService = PeripheralManager.getInstance();
-            try {
-                SpiDevice spiDevice = pioService.openSpiDevice("SPI0.0");
-                System.out.println(spiDevice);
-
-                Gpio resetPin = pioService.openGpio("BCM25");
-                mDevice = new RFIDDevice(spiDevice, resetPin);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            while(true){
-                boolean success = mDevice.request();
-                if(!success){
-                    continue;
-                }
-
-                success = mDevice.antiCollisionDetect();
-                if(!success){
-                    continue;
-                }
-
-                byte[] uid = mDevice.getUid();
-                return RFIDDevice.dataToHexString(uid);
-
-
-//                mDevice.selectTag(uid);
-//                System.out.println(mDevice.dumpMifare1k());
-//                byte[] key = {(byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF};
-//                byte block = Rc522.getBlockAddress(1,1);
-//                boolean result = mDevice.authenticateCard(Rc522.AUTH_A, block, key);
-//                if (!result) {
-//                    //Authentication failed
-//                    System.out.println("Authenticaation failed");
-//                    return null;
-//                }
-//                //Buffer to hold read data
-//                byte[] buffer = new byte[16];
-//                //Since we're still using the same block, we don't need to authenticate again
-//                result = mDevice.readBlock(block, buffer);
-//                if(!result){
-//                    //Could not read card
-//                    return null;
-//                }
-//                //Stop crypto to allow subsequent readings
-//                mDevice.stopCrypto();
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String uid) {
-            super.onPostExecute(uid);
-            MainActivity.this.getUserDrinks(uid);
-        }
     }
 
 }

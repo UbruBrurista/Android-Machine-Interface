@@ -122,7 +122,7 @@ public class RFIDDevice {
      */
     private void initializePeripherals() throws IOException {
         device.setFrequency(busSpeed);
-        resetPin.setDirection(Gpio.DIRECTION_OUT_INITIALLY_HIGH);
+//        resetPin.setDirection(Gpio.DIRECTION_OUT_INITIALLY_HIGH);
         initializeDevice();
     }
 
@@ -814,12 +814,11 @@ public class RFIDDevice {
      * @return A string representing the block's data
      */
     public static String dataToHexString(byte[] data){
-        char[] buffer = new char[data.length*3];
+        char[] buffer = new char[data.length*2];
         for(int i = 0; i < data.length; i++){
             int b = data[i] & 0xFF;
-            buffer[i*3] = HEX_CHARS[b >>> 4];
-            buffer[i*3+1] = HEX_CHARS[b & 0x0F];
-            buffer[i*3+2] = ' ';
+            buffer[i*2] = HEX_CHARS[b >>> 4];
+            buffer[i*2+1] = HEX_CHARS[b & 0x0F];
         }
         return new String(buffer);
     }

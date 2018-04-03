@@ -81,6 +81,7 @@ public class UserActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         int startPage = extras.getInt(EXTRA_STARTING_PAGE, 0);
         String json = extras.getString(EXTRA_JSON, "");
+        System.out.println(json);
         if (!json.isEmpty() && !json.equals(null)) {
             try {
                 brews = new JSONArray(json);
@@ -93,15 +94,18 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public List<JSONObject> getBrews() {
-        List<JSONObject> brewsObjects = new ArrayList<>();
-        for (int i = 0; i < brews.length(); i++) {
-            try {
-                brewsObjects.add(brews.getJSONObject(i));
-            } catch (Exception e) {
-                e.printStackTrace();
+        if (brews != null) {
+            List<JSONObject> brewsObjects = new ArrayList<>();
+            for (int i = 0; i < brews.length(); i++) {
+                try {
+                    brewsObjects.add(brews.getJSONObject(i));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+            return brewsObjects;
         }
-        return brewsObjects;
+        return null;
     }
 
     public void pageTo(int item) {
