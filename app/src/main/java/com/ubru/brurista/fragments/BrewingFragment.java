@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ubru.brurista.R;
+import com.ubru.brurista.UARTDriver;
 
 public class BrewingFragment extends UserFragment {
 
@@ -15,6 +16,8 @@ public class BrewingFragment extends UserFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_brewing, container, false);
+
+        UARTDriver.sendCommand(UARTDriver.Commands.START_FULL_CYCLE);
 
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override
