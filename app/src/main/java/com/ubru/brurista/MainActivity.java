@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.utility_mode_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("hello");
                 Intent intent = new Intent(MainActivity.this, UtilityActivity.class);
                 startActivity(intent);
             }

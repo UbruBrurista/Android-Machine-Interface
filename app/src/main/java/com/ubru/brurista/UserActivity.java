@@ -28,6 +28,7 @@ import com.ubru.brurista.fragments.PhoneNumberFragment;
 import com.ubru.brurista.fragments.UserFragment;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -48,12 +49,9 @@ public class UserActivity extends AppCompatActivity {
     public static final String EXTRA_STARTING_PAGE = "com.ubru.brurista.EXTRA_STARTING_PAGE";
     public static final String EXTRA_JSON = "com.ubru.brurista.EXTRA_JSON";
 
-
-    private int brewType;
-    private int brewTemp;
-    private int brewPressure;
-    private int brewTime;
-    private JSONArray brews;
+    private List<JSONObject> brewsObjects;
+    private int brewSize = 2;
+    private int brewTemp = 85;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -69,24 +67,23 @@ public class UserActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                return true;
-            }
-        });
 
 
         Bundle extras = getIntent().getExtras();
         int startPage = extras.getInt(EXTRA_STARTING_PAGE, 0);
         String json = extras.getString(EXTRA_JSON, "");
-        System.out.println(json);
-        if (!json.isEmpty() && !json.equals(null)) {
+        if (json != null && !json.isEmpty()) {
             try {
-                brews = new JSONArray(json);
-                System.out.println(brews.get(0));
-            } catch (Exception e) {
+                brewsObjects = new ArrayList<>();
+                JSONArray brews = new JSONArray(json);
+                for (int i = 0; i < brews.length(); i++) {
+                    try {
+                        brewsObjects.add(brews.getJSONObject(i));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -94,27 +91,22 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public List<JSONObject> getBrews() {
-        if (brews != null) {
-            List<JSONObject> brewsObjects = new ArrayList<>();
-            for (int i = 0; i < brews.length(); i++) {
-                try {
-                    brewsObjects.add(brews.getJSONObject(i));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            return brewsObjects;
-        }
-        return null;
+        return brewsObjects;
+    }
+
+    public void setBrew(int index) {
+        brewSize = 2;
+        brewTemp = 85;
+    }
+
+    public byte[] getBrewBytes() {
+        byte[] bytesToSend = {(byte) brewSize, (byte) brewTemp};
+        return bytesToSend;
     }
 
     public void pageTo(int item) {
         mViewPager.setCurrentItem(item, false);
         mSectionsPagerAdapter.frags[item].onSlideTo();
-    }
-
-    public void setBrewType(int brewType) {
-        this.brewType = brewType;
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

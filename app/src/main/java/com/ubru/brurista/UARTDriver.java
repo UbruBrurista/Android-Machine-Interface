@@ -1,39 +1,28 @@
 package com.ubru.brurista;
 
-import android.content.Context;
-import android.hardware.usb.UsbManager;
-import android.hardware.usb.UsbDevice;
-
-
 import com.google.android.things.pio.PeripheralManager;
 import com.google.android.things.pio.UartDevice;
 
-
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
-
-/**
- * Created by Vinay on 3/28/18.
- */
 
 public class UARTDriver {
 
     private static final int BAUD_RATE = 9600;
-    private static PeripheralManager mPeripheralManager;
     private static UartDevice mArduino;
 
     public static class Commands {
-        public static byte[] START_FULL_CYCLE = {1};
-        public static byte[] GO_HOME = {2};
-        public static byte[] GO_WORK = {3};
-        public static byte[] GRIND = {4};
-        public static byte[] PUMP = {5};
-        public static byte[] DISABLE_ALL = {100};
+        public static byte[] START_FULL_CYCLE = {1, 2, 85};
+        static byte[] GO_HOME = {2};
+        static byte[] GO_WORK = {3};
+        static byte[] GRIND = {4};
+        static byte[] PUMP = {5};
+        static byte[] DISABLE_ALL = {100};
     }
 
-    public static void init() {
-        mPeripheralManager = PeripheralManager.getInstance();
+    static void init() {
+//        If this breaks, make mPeripheralManager a static class variable again
+        PeripheralManager mPeripheralManager = PeripheralManager.getInstance();
 
        /* See available devices */
       /* List<String> deviceList = mPeripheralManager.getUartDeviceList();
@@ -63,7 +52,7 @@ public class UARTDriver {
             System.out.println("Writing to arduino: " + Arrays.toString(command));
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("FAILED to write....");
+            System.err.println("FAILED to write....");
         }
     }
 }

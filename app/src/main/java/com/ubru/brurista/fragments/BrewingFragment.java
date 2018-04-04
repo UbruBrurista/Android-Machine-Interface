@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import com.ubru.brurista.R;
 import com.ubru.brurista.UARTDriver;
 
+import java.util.Arrays;
+
 public class BrewingFragment extends UserFragment {
 
     @Override
@@ -17,7 +19,15 @@ public class BrewingFragment extends UserFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_brewing, container, false);
 
-//        UARTDriver.sendCommand(UARTDriver.Commands.START_FULL_CYCLE);
+        byte[] bytesReceived = getParent().getBrewBytes();
+
+        byte[] bytesToSend = new byte[3];
+        bytesToSend[0] = UARTDriver.Commands.START_FULL_CYCLE[0];
+        bytesToSend[1] = bytesReceived[0];
+        bytesToSend[2] = bytesReceived[1];
+
+        System.out.println("Sending Arduino: " + Arrays.toString(bytesToSend));
+//        UARTDriver.sendCommand(bytesToSend);
 
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override

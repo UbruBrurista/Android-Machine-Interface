@@ -52,7 +52,7 @@ public class DrinkListFragment extends UserFragment {
 
         List<JSONObject> drinks;
 
-        public DrinkListAdapter(Context context, int resource, List<JSONObject> objects) {
+        DrinkListAdapter(Context context, int resource, List<JSONObject> objects) {
             super(context, resource, objects);
             this.drinks = objects;
         }
