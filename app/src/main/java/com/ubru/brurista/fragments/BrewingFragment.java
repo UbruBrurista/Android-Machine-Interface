@@ -19,16 +19,7 @@ public class BrewingFragment extends UserFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_brewing, container, false);
 
-        byte[] bytesReceived = getParent().getBrewBytes();
 
-        byte[] bytesToSend = new byte[3];
-        bytesToSend[0] = UARTDriver.Commands.START_FULL_CYCLE[0];
-        bytesToSend[1] = bytesReceived[0];
-        bytesToSend[2] = bytesReceived[1];
-        bytesToSend[3] = bytesReceived[2];
-
-        System.out.println("Sending Arduino: " + Arrays.toString(bytesToSend));
-//        UARTDriver.sendCommand(bytesToSend);
 
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,5 +31,19 @@ public class BrewingFragment extends UserFragment {
         return rootView;
     }
 
+    @Override
+    public void onSlideTo() {
+        super.onSlideTo();
 
+        byte[] bytesReceived = getParent().getBrewBytes();
+
+        byte[] bytesToSend = new byte[4];
+        bytesToSend[0] = UARTDriver.Commands.START_FULL_CYCLE[0];
+        bytesToSend[1] = bytesReceived[0];
+        bytesToSend[2] = bytesReceived[1];
+        bytesToSend[3] = bytesReceived[2];
+
+        System.out.println("Sending Arduino: " + Arrays.toString(bytesToSend));
+        UARTDriver.sendCommand(bytesToSend);
+    }
 }

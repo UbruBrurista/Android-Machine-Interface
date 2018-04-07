@@ -5,6 +5,7 @@ import com.google.android.things.pio.UartDevice;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 public class UARTDriver {
 
@@ -25,15 +26,15 @@ public class UARTDriver {
         PeripheralManager mPeripheralManager = PeripheralManager.getInstance();
 
        /* See available devices */
-      /* List<String> deviceList = mPeripheralManager.getUartDeviceList();
-        if (deviceList.isEmpty()) {
-            System.out.println("No device");
-        } else {
-            System.out.println("------> Available devices: ");
-          for (String s : deviceList) {
-                System.out.println(s);
-             }
-        }*/
+//       List<String> deviceList = mPeripheralManager.getUartDeviceList();
+//        if (deviceList.isEmpty()) {
+//            System.out.println("No device");
+//        } else {
+//            System.out.println("------> Available devices: ");
+//          for (String s : deviceList) {
+//                System.out.println(s);
+//             }
+//        }
 
 
         try {
