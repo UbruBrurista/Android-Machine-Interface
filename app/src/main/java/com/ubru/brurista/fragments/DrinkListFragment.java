@@ -74,6 +74,7 @@ public class DrinkListFragment extends UserFragment {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    getParent().setBrew(position);
                     getParent().pageTo(UserActivity.BREWING_FRAGMENT);
                 }
             });

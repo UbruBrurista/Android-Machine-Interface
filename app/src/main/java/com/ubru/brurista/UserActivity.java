@@ -50,7 +50,7 @@ public class UserActivity extends AppCompatActivity {
     public static final String EXTRA_JSON = "com.ubru.brurista.EXTRA_JSON";
 
     private List<JSONObject> brewsObjects;
-    private int brewSize = 2;
+    private String brewSize = "Medium";
     private int brewTemp = 85;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -95,12 +95,23 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void setBrew(int index) {
-        brewSize = 2;
-        brewTemp = 85;
+        JSONObject brew = brewsObjects.get(index);
+        brewSize = brew.optString("brew_size", "Medium");
+        brewTemp = brew.optInt("brew_temp", 85);
     }
 
     public byte[] getBrewBytes() {
-        byte[] bytesToSend = {(byte) brewSize, (byte) brewTemp};
+        byte sizeByte = 0;
+        if (brewSize.equals("Small")) {
+            sizeByte = 1;
+        } else if (brewSize.equals("Medium")) {
+            sizeByte = 2;
+        } else if (brewSize.equals("Large")) {
+            sizeByte = 3;
+        }
+
+
+        byte[] bytesToSend = {sizeByte, (byte) brewTemp};
         return bytesToSend;
     }
 
