@@ -12,7 +12,7 @@ public class UARTDriver {
     private static UartDevice mArduino;
 
     public static class Commands {
-        public static byte[] START_FULL_CYCLE = {1, 2, 85};
+        public static byte[] START_FULL_CYCLE = {1, 1, 2, 85};
         static byte[] GO_HOME = {2};
         static byte[] GO_WORK = {3};
         static byte[] GRIND = {4};

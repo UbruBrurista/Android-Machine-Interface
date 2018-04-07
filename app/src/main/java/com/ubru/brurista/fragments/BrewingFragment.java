@@ -25,6 +25,7 @@ public class BrewingFragment extends UserFragment {
         bytesToSend[0] = UARTDriver.Commands.START_FULL_CYCLE[0];
         bytesToSend[1] = bytesReceived[0];
         bytesToSend[2] = bytesReceived[1];
+        bytesToSend[3] = bytesReceived[2];
 
         System.out.println("Sending Arduino: " + Arrays.toString(bytesToSend));
 //        UARTDriver.sendCommand(bytesToSend);

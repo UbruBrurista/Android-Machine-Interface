@@ -23,7 +23,7 @@ public class NewDrinkFragment extends UserFragment {
         espressoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getParent().setBrewType(UserActivity.BREW_TYPE_ESPRESSO);
+//                getParent().setBrewType(UserActivity.BREW_TYPE_ESPRESSO);
                 getParent().pageTo(UserActivity.DRINK_PARAMETERS_FRAGMENT);
             }
         });
@@ -32,7 +32,7 @@ public class NewDrinkFragment extends UserFragment {
         americanoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getParent().setBrewType(UserActivity.BREW_TYPE_AMERICANO);
+//                getParent().setBrewType(UserActivity.BREW_TYPE_AMERICANO);
                 getParent().pageTo(UserActivity.DRINK_PARAMETERS_FRAGMENT);
             }
         });

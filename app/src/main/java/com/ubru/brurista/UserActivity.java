@@ -36,8 +36,8 @@ import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
 
-    public static final int BREW_TYPE_ESPRESSO = 0;
-    public static final int BREW_TYPE_AMERICANO = 1;
+    public static final String BREW_TYPE_ESPRESSO = "ES";
+    public static final String BREW_TYPE_AMERICANO = "AM";
 
     public static final int DRINK_LIST_FRAGMENT = 0;
     public static final int BREWING_FRAGMENT = 1;
@@ -50,6 +50,7 @@ public class UserActivity extends AppCompatActivity {
     public static final String EXTRA_JSON = "com.ubru.brurista.EXTRA_JSON";
 
     private List<JSONObject> brewsObjects;
+    private String brewType = BREW_TYPE_ESPRESSO;
     private String brewSize = "Medium";
     private int brewTemp = 85;
 
@@ -96,11 +97,22 @@ public class UserActivity extends AppCompatActivity {
 
     public void setBrew(int index) {
         JSONObject brew = brewsObjects.get(index);
+        brewType = brew.optString("brew_type", "ES");
         brewSize = brew.optString("brew_size", "Medium");
         brewTemp = brew.optInt("brew_temp", 85);
     }
 
     public byte[] getBrewBytes() {
+        byte typeByte = 0;
+        switch(brewType) {
+            case "ES":
+                typeByte = 1;
+                break;
+            case "AM":
+                typeByte = 2;
+                break;
+        }
+
         byte sizeByte = 0;
         if (brewSize.equals("Small")) {
             sizeByte = 1;
@@ -111,7 +123,7 @@ public class UserActivity extends AppCompatActivity {
         }
 
 
-        byte[] bytesToSend = {sizeByte, (byte) brewTemp};
+        byte[] bytesToSend = {typeByte, sizeByte, (byte) brewTemp};
         return bytesToSend;
     }
 
