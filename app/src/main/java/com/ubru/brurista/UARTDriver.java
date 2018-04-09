@@ -1,7 +1,10 @@
 package com.ubru.brurista;
 
+import android.util.Log;
+
 import com.google.android.things.pio.PeripheralManager;
 import com.google.android.things.pio.UartDevice;
+import com.google.android.things.pio.UartDeviceCallback;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -40,6 +43,7 @@ public class UARTDriver {
         try {
             mArduino = mPeripheralManager.openUartDevice("MINIUART");
             mArduino.setBaudrate(BAUD_RATE);
+            mArduino.registerUartDeviceCallback(mUartCallback);
             System.out.println("------> Connected to " + mArduino.getName());
         } catch (IOException e) {
             System.err.println("Could not connect!");
@@ -56,4 +60,38 @@ public class UARTDriver {
             System.err.println("FAILED to write....");
         }
     }
+    private static void readUartBuffer(UartDevice uart) throws IOException {
+        // Maximum amount of data to read at one time
+        final int maxCount = 1;
+        byte[] buffer = new byte[maxCount];
+
+        int count;
+        while ((count = uart.read(buffer, buffer.length)) > 0) {
+            System.out.println("Read " + count + " bytes from peripheral");
+        }
+    }
+
+
+    private static UartDeviceCallback mUartCallback = new UartDeviceCallback() {
+        @Override
+        public boolean onUartDeviceDataAvailable(UartDevice uart) {
+            // Read available data from the UART device
+            try {
+                readUartBuffer(uart);
+            } catch (IOException e) {
+                System.out.println("Unable to access UART device");
+                e.printStackTrace();
+            }
+
+
+            // Continue listening for more interrupts
+            return true;
+        }
+
+        @Override
+        public void onUartDeviceError(UartDevice uart, int error) {
+            System.err.println(uart + ": Error event " + error);
+        }
+    };
+
 }
