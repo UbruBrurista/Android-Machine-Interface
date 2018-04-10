@@ -25,20 +25,7 @@ public class UARTDriver {
     }
 
     static void init() {
-//        If this breaks, make mPeripheralManager a static class variable again
         PeripheralManager mPeripheralManager = PeripheralManager.getInstance();
-
-       /* See available devices */
-//       List<String> deviceList = mPeripheralManager.getUartDeviceList();
-//        if (deviceList.isEmpty()) {
-//            System.out.println("No device");
-//        } else {
-//            System.out.println("------> Available devices: ");
-//          for (String s : deviceList) {
-//                System.out.println(s);
-//             },,.
-//        }
-
 
         try {
             mArduino = mPeripheralManager.openUartDevice("MINIUART");

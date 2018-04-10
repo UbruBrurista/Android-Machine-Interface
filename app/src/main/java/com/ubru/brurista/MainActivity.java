@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
 //        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
 //        decorView.setSystemUiVisibility(uiOptions);
 
-        UARTDriver.init();
+//        UARTDriver.init();
+        GPIODriver.init();
 
         findViewById(R.id.new_user_button).setOnClickListener(new View.OnClickListener() {
             @Override
