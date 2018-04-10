@@ -19,6 +19,17 @@ public class GPIODriver {
     private static Gpio PULSE_PGIO = null;
     private static Gpio START_STOP_GPIO = null;
 
+    public static class Commands {
+
+        static int START_FULL_CYCLE = 1;
+        static int GO_HOME = 2;
+        static int GO_WORK = 3;
+        static int GRIND = 4;
+        static int PUMP = 5;
+        static int DISABLE_ALL = 100;
+
+    }
+
     private static ToggleHandler timerHandler = new ToggleHandler();
 
     static void init() {
@@ -30,11 +41,11 @@ public class GPIODriver {
                 START_STOP_GPIO = manager.openGpio(PULSE_PIN);
 
                 PULSE_PGIO.setActiveType(Gpio.ACTIVE_HIGH);
-                PULSE_PGIO.setActiveType(Gpio.ACTIVE_HIGH);
+                START_STOP_GPIO.setActiveType(Gpio.ACTIVE_HIGH);
 
                 System.out.println("Setting to high");
 
-                write(100);
+                //write(50);
             } catch (IOException e) {
                 System.err.println("OPENING GPIO ERROR");
                 e.printStackTrace();
@@ -52,6 +63,7 @@ public class GPIODriver {
         private int count = 0;
         private int currentCount = 0;
         private boolean isEnabled = false;
+        private boolean isStartStopEnabled = false;
 
         private Runnable toggleRunnable = new Runnable() {
             @Override
@@ -60,6 +72,8 @@ public class GPIODriver {
                     if (isEnabled) {
                         PULSE_PGIO.setValue(false);
                         if (currentCount >= count) {
+                            // Toggle start/stop pin!
+                            ToggleHandler.this.postDelayed(toggleStartStop, 20);
                             return;
                         }
                     } else {
@@ -76,6 +90,26 @@ public class GPIODriver {
             }
         };
 
+        private Runnable toggleStartStop = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if(isStartStopEnabled) {
+                        START_STOP_GPIO.setValue(false);
+                        isStartStopEnabled = false;
+                        return;
+                    } else {
+                        START_STOP_GPIO.setValue(true);
+                        System.out.println("Toggle START/STOP GPIO!");
+                    }
+                    isStartStopEnabled = true;
+                    ToggleHandler.this.postDelayed(this, 20);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
         void startToggle(int count) {
             this.count = count;
             this.currentCount = 0;
@@ -88,6 +122,9 @@ public class GPIODriver {
                 e.printStackTrace();
             }
 
+            // START PIN:
+            // Toggle START/STOP pin
+            this.postDelayed(toggleStartStop, 20);
 
             this.post(toggleRunnable);
 
