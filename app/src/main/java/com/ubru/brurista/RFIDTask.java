@@ -7,17 +7,23 @@ import com.google.android.things.pio.PeripheralManager;
 import com.google.android.things.pio.SpiDevice;
 
 import java.io.IOException;
+import java.util.Arrays;
 
-abstract class RFIDTask extends AsyncTask<Void, Void, String> {
+public abstract class RFIDTask extends AsyncTask<Void, Void, String> {
 
     private RFIDDevice mDevice;
     private Gpio resetPin;
     private SpiDevice spiDevice;
+    private boolean isRunning = true;
 
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+    }
+
+    @Override
+    protected String doInBackground(Void... voids) {
         if (mDevice == null) {
             PeripheralManager pioService = PeripheralManager.getInstance();
             try {
@@ -32,11 +38,10 @@ abstract class RFIDTask extends AsyncTask<Void, Void, String> {
                 e.printStackTrace();
             }
         }
-    }
 
-    @Override
-    protected String doInBackground(Void... voids) {
-        while(true){
+        String uid = "";
+
+        while(isRunning){
             boolean success = mDevice.request();
             if(!success){
                 continue;
@@ -47,51 +52,34 @@ abstract class RFIDTask extends AsyncTask<Void, Void, String> {
                 continue;
             }
 
-            byte[] uid = mDevice.getUid();
-            return RFIDDevice.dataToHexString(uid);
-
-
-//                mDevice.selectTag(uid);
-//                System.out.println(mDevice.dumpMifare1k());
-//                byte[] key = {(byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF};
-//                byte block = Rc522.getBlockAddress(1,1);
-//                boolean result = mDevice.authenticateCard(Rc522.AUTH_A, block, key);
-//                if (!result) {
-//                    //Authentication failed
-//                    System.out.println("Authenticaation failed");
-//                    return null;
-//                }
-//                //Buffer to hold read data
-//                byte[] buffer = new byte[16];
-//                //Since we're still using the same block, we don't need to authenticate again
-//                result = mDevice.readBlock(block, buffer);
-//                if(!result){
-//                    //Could not read card
-//                    return null;
-//                }
-//                //Stop crypto to allow subsequent readings
-//                mDevice.stopCrypto();
+            byte[] uidBytes = mDevice.getUid();
+            System.out.println(Arrays.toString(uidBytes));
+            uid = RFIDDevice.dataToHexString(uidBytes);
+            break;
         }
+
+        try {
+            this.spiDevice.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return uid;
     }
 
     @Override
     protected void onPostExecute(String uid) {
         super.onPostExecute(uid);
 
-        try {
-            spiDevice.close();
-//            resetPin.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
-        System.out.println(uid);
+        System.out.println("MainActivity: " + uid);
         if (uid != null) {
             postExecuteCallback(uid);
         }
 
     }
 
-    abstract void postExecuteCallback(String uid);
+    public void stop() {
+        this.isRunning = false;
+    }
+
+    public abstract void postExecuteCallback(String uid);
 }

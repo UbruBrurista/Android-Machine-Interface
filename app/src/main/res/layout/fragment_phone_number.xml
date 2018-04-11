@@ -23,11 +23,33 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".5"
+            android:layout_weight=".45"
+            android:background="@drawable/white_box"
+            android:hint="Name"
+            android:id="@+id/name"
+            android:gravity="center"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@android:color/white"
+            android:padding="@dimen/activity_margin"
+            android:inputType="text"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+        </EditText>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".45"
+            android:hint="Phone Number"
             android:background="@drawable/white_box"
             android:id="@+id/phone_number"
             android:gravity="center"
-            android:textSize="@dimen/text_xlarge"
+            android:textSize="@dimen/text_medium"
             android:textColor="@android:color/white"
             android:padding="@dimen/activity_margin"
             android:inputType="phone"

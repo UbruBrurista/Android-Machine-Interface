@@ -48,20 +48,26 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.new_user_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startUserActivity(UserActivity.NEW_PHONE_FRAGMENT, null);
+                task.stop();
+                task.cancel(false);
+                startUserActivity(UserActivity.NEW_PHONE_FRAGMENT, null, null);
             }
         });
 
         findViewById(R.id.preset_brews_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startUserActivity(UserActivity.DRINK_LIST_FRAGMENT, null);
+                task.stop();
+                task.cancel(false);
+                startUserActivity(UserActivity.DRINK_LIST_FRAGMENT, null, null);
             }
         });
 
         findViewById(R.id.utility_mode_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                task.stop();
+                task.cancel(false);
                 Intent intent = new Intent(MainActivity.this, UtilityActivity.class);
                 startActivity(intent);
             }
@@ -71,20 +77,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (task != null)
-            task.cancel(true);
+        if (task != null) {
+            task.stop();
+            task.cancel(false);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (task != null)
-            task.cancel(true);
+        if (task != null) {
+            task.stop();
+            task.cancel(false);
+        }
 
         task = new RFIDTask() {
             @Override
-            void postExecuteCallback(String uid) {
-                System.out.println(uid);
+            public void postExecuteCallback(String uid) {
                 getUserDrinks(uid);
             }
         };
@@ -92,23 +101,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void startUserActivity(int page, String json) {
+    private void startUserActivity(int page, String json, String uuid) {
         Intent intent = new Intent(this, UserActivity.class);
         intent.putExtra(UserActivity.EXTRA_STARTING_PAGE, page);
         intent.putExtra(UserActivity.EXTRA_JSON, json);
+        intent.putExtra(UserActivity.EXTRA_UUID, uuid);
         startActivity(intent);
     }
 
-    private void getUserDrinks(String uid) {
+    private void getUserDrinks(final String uid) {
         final RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         String url = BASE_URL + uid;
-        System.out.println(url);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         System.out.println(response);
-                        startUserActivity(UserActivity.DRINK_LIST_FRAGMENT, response);
+                        startUserActivity(UserActivity.DRINK_LIST_FRAGMENT, response, uid);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -118,5 +127,3 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-// [80, 102, 68, 30, 108, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-// [-52, 64, 43, -71, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

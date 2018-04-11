@@ -48,11 +48,14 @@ public class UserActivity extends AppCompatActivity {
 
     public static final String EXTRA_STARTING_PAGE = "com.ubru.brurista.EXTRA_STARTING_PAGE";
     public static final String EXTRA_JSON = "com.ubru.brurista.EXTRA_JSON";
+    public static final String EXTRA_UUID = "com.ubru.brurista.EXTRA_UUID";
 
     private List<JSONObject> brewsObjects;
+    private String brewName = "";
     private String brewType = BREW_TYPE_ESPRESSO;
     private String brewSize = "Medium";
     private int brewTemp = 85;
+    private String uid = "";
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -73,6 +76,8 @@ public class UserActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         int startPage = extras.getInt(EXTRA_STARTING_PAGE, 0);
         String json = extras.getString(EXTRA_JSON, "");
+        uid = extras.getString(EXTRA_UUID, "");
+
         if (json != null && !json.isEmpty()) {
             try {
                 brewsObjects = new ArrayList<>();
@@ -102,8 +107,8 @@ public class UserActivity extends AppCompatActivity {
         brewTemp = brew.optInt("brew_temp", 85);
     }
 
-    public byte[] getBrewBytes() {
-        byte typeByte = 0;
+    public int[] getBrewBytes() {
+        int typeByte = 0;
         switch(brewType) {
             case "ES":
                 typeByte = 1;
@@ -113,7 +118,7 @@ public class UserActivity extends AppCompatActivity {
                 break;
         }
 
-        byte sizeByte = 0;
+        int sizeByte = 0;
         if (brewSize.equals("Small")) {
             sizeByte = 1;
         } else if (brewSize.equals("Medium")) {
@@ -122,14 +127,45 @@ public class UserActivity extends AppCompatActivity {
             sizeByte = 3;
         }
 
+        int tempByte = brewTemp - 79;
 
-        byte[] bytesToSend = {typeByte, sizeByte, (byte) brewTemp};
+
+        int[] bytesToSend = {typeByte, sizeByte, tempByte};
         return bytesToSend;
+    }
+
+    public void setUID(String uid) {
+        this.uid = uid;
+    }
+
+    public String getUID() {
+        return this.uid;
+    }
+
+    public void setBrewType(String s) {
+        this.brewType = s;
+    }
+
+    public String getBrewType() {
+        return this.brewType;
+    }
+
+    public void setBrewName(String s) {
+        this.brewName = s;
+    }
+
+    public String getBrewName() {
+        return this.brewName;
     }
 
     public void pageTo(int item) {
         mViewPager.setCurrentItem(item, false);
         mSectionsPagerAdapter.frags[item].onSlideTo();
+    }
+
+    public void setBrewParams(String size, int temp) {
+        this.brewSize = size;
+        this.brewTemp = temp;
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

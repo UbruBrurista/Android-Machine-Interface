@@ -22,6 +22,45 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
+                android:id="@+id/size_increment"
+                android:textSize="@dimen/text_xlarge"
+                android:textColor="@android:color/white"
+                android:text="@string/plus"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/activity_margin_large"
+                android:id="@+id/size_text"
+                android:textSize="@dimen/text_medium"
+                android:textColor="@android:color/white"
+                android:background="@drawable/white_box"
+                android:gravity="center"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:id="@+id/size_decrement"
+                android:textSize="@dimen/text_xlarge"
+                android:textColor="@android:color/white"
+                android:text="@string/minus"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
                 android:id="@+id/temp_increment"
                 android:textSize="@dimen/text_xlarge"
                 android:textColor="@android:color/white"
@@ -33,7 +72,7 @@
                 android:layout_weight="1"
                 android:layout_margin="@dimen/activity_margin_large"
                 android:id="@+id/temp_text"
-                android:textSize="@dimen/text_xlarge"
+                android:textSize="@dimen/text_medium"
                 android:textColor="@android:color/white"
                 android:background="@drawable/white_box"
                 android:gravity="center"/>
@@ -50,83 +89,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:id="@+id/pressure_increment"
-                android:textSize="@dimen/text_xlarge"
-                android:textColor="@android:color/white"
-                android:text="@string/plus"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/activity_margin_large"
-                android:id="@+id/pressure_text"
-                android:textSize="@dimen/text_xlarge"
-                android:textColor="@android:color/white"
-                android:background="@drawable/white_box"
-                android:gravity="center"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:id="@+id/pressure_decrement"
-                android:textSize="@dimen/text_xlarge"
-                android:textColor="@android:color/white"
-                android:text="@string/minus"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:id="@+id/time_increment"
-                android:textSize="@dimen/text_xlarge"
-                android:textColor="@android:color/white"
-                android:text="@string/plus"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/activity_margin_large"
-                android:id="@+id/time_text"
-                android:textSize="@dimen/text_xlarge"
-                android:textColor="@android:color/white"
-                android:background="@drawable/white_box"
-                android:gravity="center"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:id="@+id/time_decrement"
-                android:textSize="@dimen/text_xlarge"
-                android:textColor="@android:color/white"
-                android:text="@string/minus"/>
-
-        </LinearLayout>
 
     </LinearLayout>
 

@@ -25,7 +25,7 @@
             android:layout_margin="8dp"
             android:id="@+id/test_1"
             android:text="Run Full Cycle"
-            android:onClick="test1"/>
+            android:onClick="runFullCycle"/>
 
         <Button
             style="@style/DarkButtonTheme"
@@ -35,7 +35,7 @@
             android:layout_margin="8dp"
             android:id="@+id/test_2"
             android:text="Go Home"
-            android:onClick="test2"/>
+            android:onClick="goHome"/>
 
         <Button
             style="@style/DarkButtonTheme"
@@ -45,7 +45,7 @@
             android:layout_margin="8dp"
             android:id="@+id/test_3"
             android:text="Go Work"
-            android:onClick="test3"/>
+            android:onClick="goWork"/>
 
     </LinearLayout>
 
@@ -53,78 +53,76 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:weightSum="3"
+        android:weightSum="6"
         android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="invisible"/>
 
         <Button
             style="@style/DarkButtonTheme"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_margin="8dp"
             android:id="@+id/test_4"
             android:text="Run Grinder"
-            android:onClick="test4"/>
+            android:onClick="runGrinder"/>
 
         <Button
             style="@style/DarkButtonTheme"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_margin="8dp"
             android:id="@+id/test_5"
             android:text="Run Pump"
-            android:onClick="test5"/>
+            android:onClick="runPump"/>
 
-        <Button
-            style="@style/DarkButtonTheme"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_margin="8dp"
-            android:id="@+id/test_6"
-            android:text="Test 6"
-            android:onClick="test6"/>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@android:color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:weightSum="3"
+        android:weightSum="6"
         android:orientation="horizontal">
 
         <Button
-            style="@style/DarkButtonTheme"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_margin="8dp"
-            android:id="@+id/test_7"
-            android:text="Test 7"
-            android:onClick="test7"/>
+            android:visibility="invisible"/>
 
         <Button
             style="@style/DarkButtonTheme"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_margin="8dp"
-            android:id="@+id/test_8"
-            android:text="Test 8"
-            android:onClick="test8"/>
-
-        <Button
-            style="@style/DarkButtonTheme"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_margin="8dp"
             android:id="@+id/test_9"
             android:background="@android:color/holo_red_dark"
             android:text="DISABLE ALL"
-            android:onClick="test9"/>
+            android:onClick="disable"/>
+
+        <Button
+            style="@style/DarkButtonTheme"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:layout_margin="8dp"
+            android:id="@+id/test_8"
+            android:text="Finish"
+            android:onClick="finish"/>
 
     </LinearLayout>
 

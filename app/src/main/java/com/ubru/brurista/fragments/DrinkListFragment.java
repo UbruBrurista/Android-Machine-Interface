@@ -26,17 +26,27 @@ import java.util.List;
 
 public class DrinkListFragment extends UserFragment {
 
+    ListView list;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_drink_list, container, false);
-        ListView list = rootView.findViewById(R.id.drink_list_view);
-        List<JSONObject> brews = getParent().getBrews();
-        list.setAdapter(new DrinkListAdapter(
-                this.getContext(), android.R.layout.simple_list_item_1, brews));
+        list = rootView.findViewById(R.id.drink_list_view);
 
-        Button customDrink = rootView.findViewById(R.id.custom_drink_button);
+        return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        List<JSONObject> brews = getParent().getBrews();
+        if (brews != null) {
+            list.setAdapter(new DrinkListAdapter(
+                    this.getContext(), android.R.layout.simple_list_item_1, brews));
+        }
+
+        Button customDrink = getView().findViewById(R.id.custom_drink_button);
         customDrink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,8 +54,6 @@ public class DrinkListFragment extends UserFragment {
             }
         });
 
-
-        return rootView;
     }
 
     private class DrinkListAdapter extends ArrayAdapter<JSONObject> {

@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.google.android.things.pio.Gpio;
+import com.google.android.things.pio.GpioCallback;
 import com.google.android.things.pio.PeripheralManager;
 
 import java.io.IOException;
@@ -21,12 +22,12 @@ public class GPIODriver {
 
     public static class Commands {
 
-        static int START_FULL_CYCLE = 1;
-        static int GO_HOME = 2;
-        static int GO_WORK = 3;
-        static int GRIND = 4;
-        static int PUMP = 5;
-        static int DISABLE_ALL = 100;
+        static int[] DISABLE_ALL = {1};
+        public static int[] START_FULL_CYCLE = {2, 1, 2, 1};
+        static int[] GO_HOME = {3};
+        static int[] GO_WORK = {4};
+        static int[] GRIND = {5};
+        static int[] PUMP = {6};
 
     }
 
@@ -54,16 +55,53 @@ public class GPIODriver {
 
     }
 
-    static void write(int count) {
-        timerHandler.startToggle(count);
+    public static void setupCallback(GpioCallback callback) {
+        try {
+            // Initialize the pin as an input
+            START_STOP_GPIO.setDirection(Gpio.DIRECTION_IN);
+            // Low voltage is considered active
+            START_STOP_GPIO.setActiveType(Gpio.ACTIVE_LOW);
+
+            // Register for all state changes
+            START_STOP_GPIO.setEdgeTriggerType(Gpio.EDGE_BOTH);
+            START_STOP_GPIO.registerGpioCallback(callback);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void write (int[] nums, final GpioCallback callback) {
+        timerHandler.startToggle(nums, new HandlerCallback(){
+            @Override
+            public void onSendFinish() {
+                try {
+                    // Initialize the pin as an input
+                    START_STOP_GPIO.setDirection(Gpio.DIRECTION_IN);
+                    // Low voltage is considered active
+                    START_STOP_GPIO.setActiveType(Gpio.ACTIVE_HIGH);
+
+                    // Register for all state changes
+                    START_STOP_GPIO.setEdgeTriggerType(Gpio.EDGE_RISING);
+                    START_STOP_GPIO.registerGpioCallback(callback);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public static void write(int[] nums) {
+        timerHandler.startToggle(nums, null);
     }
 
     static class ToggleHandler extends Handler {
 
-        private int count = 0;
+        private int[] nums = {};
+        private int index = 0;
         private int currentCount = 0;
         private boolean isEnabled = false;
         private boolean isStartStopEnabled = false;
+        private HandlerCallback callback;
 
         private Runnable toggleRunnable = new Runnable() {
             @Override
@@ -71,15 +109,16 @@ public class GPIODriver {
                 try {
                     if (isEnabled) {
                         PULSE_PGIO.setValue(false);
-                        if (currentCount >= count) {
+                        currentCount++;
+
+                        if (currentCount >= nums[index]) {
                             // Toggle start/stop pin!
+                            System.out.println(currentCount);
                             ToggleHandler.this.postDelayed(toggleStartStop, 20);
                             return;
                         }
                     } else {
                         PULSE_PGIO.setValue(true);
-                        System.out.println(currentCount);
-                        currentCount++;
                     }
                     isEnabled = !isEnabled;
                 } catch (Exception e) {
@@ -97,10 +136,22 @@ public class GPIODriver {
                     if(isStartStopEnabled) {
                         START_STOP_GPIO.setValue(false);
                         isStartStopEnabled = false;
+                        if (currentCount == nums[index]) {
+                            index++;
+                            if (index < nums.length) {
+                                ToggleHandler.this.postDelayed(sendByte, 20);
+                            } else {
+                                if (callback != null) {
+                                    callback.onSendFinish();
+                                }
+                            }
+                        }
                         return;
                     } else {
                         START_STOP_GPIO.setValue(true);
-                        System.out.println("Toggle START/STOP GPIO!");
+                        if (currentCount == 0) {
+                            System.out.println("STARTING");
+                        }
                     }
                     isStartStopEnabled = true;
                     ToggleHandler.this.postDelayed(this, 20);
@@ -110,26 +161,40 @@ public class GPIODriver {
             }
         };
 
-        void startToggle(int count) {
-            this.count = count;
-            this.currentCount = 0;
-            this.isEnabled = false;
+        private Runnable sendByte = new Runnable() {
+            @Override
+            public void run() {
+                currentCount = 0;
+                isEnabled = false;
 
-            try {
-                PULSE_PGIO.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
-                START_STOP_GPIO.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
-            } catch (Exception e) {
-                e.printStackTrace();
+                try {
+                    PULSE_PGIO.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
+                    START_STOP_GPIO.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                // START PIN:
+                // Toggle START/STOP pin
+                ToggleHandler.this.post(toggleStartStop);
+                ToggleHandler.this.postDelayed(toggleRunnable, 20);
             }
+        };
 
-            // START PIN:
-            // Toggle START/STOP pin
-            this.postDelayed(toggleStartStop, 20);
+        void startToggle(int[] nums, HandlerCallback callback) {
+            this.nums = nums;
+            this.index = 0;
+            this.callback = callback;
 
-            this.post(toggleRunnable);
-
+            this.post(sendByte);
 
         }
+
+    }
+
+    public static abstract class HandlerCallback {
+
+        public abstract void onSendFinish();
 
     }
 
