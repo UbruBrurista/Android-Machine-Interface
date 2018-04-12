@@ -23,7 +23,7 @@ public class GPIODriver {
     public static class Commands {
 
         static int[] DISABLE_ALL = {1};
-        public static int[] START_FULL_CYCLE = {2, 1, 2, 1};
+        public static int[] START_FULL_CYCLE = {2, 1, 3, 1}; // ES/AM, SIZE, 79 + TEMP
         static int[] GO_HOME = {3};
         static int[] GO_WORK = {4};
         static int[] GRIND = {5};
