@@ -29,7 +29,7 @@ public class BrewingFragment extends UserFragment {
             "Grinding",
             "Brewing",
             "Cleaning Up"
-    }
+    };
     private int stageIndex = 0;
     private TextView stageView;
 
