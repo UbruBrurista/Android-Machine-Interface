@@ -6,7 +6,7 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="192dp"
+        android:layout_height="150dp"
         android:paddingBottom="32dp"
         android:src="@drawable/ubru_text_only_white"/>
 
@@ -14,6 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
-        android:text="Brewing Your Drink..."/>
+        android:textSize="@dimen/text_large"
+        android:id="@+id/brewing_stage"
+        android:text="Preheating..."/>
 
 </LinearLayout>
