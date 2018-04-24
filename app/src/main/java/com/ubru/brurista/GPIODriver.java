@@ -81,7 +81,7 @@ public class GPIODriver {
                     START_STOP_GPIO.setActiveType(Gpio.ACTIVE_HIGH);
 
                     // Register for all state changes
-                    START_STOP_GPIO.setEdgeTriggerType(Gpio.EDGE_RISING);
+                    START_STOP_GPIO.setEdgeTriggerType(Gpio.EDGE_BOTH);
                     START_STOP_GPIO.registerGpioCallback(callback);
                 } catch (IOException e) {
                     e.printStackTrace();

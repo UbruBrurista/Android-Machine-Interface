@@ -20,6 +20,7 @@ import com.ubru.brurista.R;
 import com.ubru.brurista.UARTDriver;
 import com.ubru.brurista.UserActivity;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class BrewingFragment extends UserFragment {
@@ -40,10 +41,11 @@ public class BrewingFragment extends UserFragment {
 
         stageView = rootView.findViewById(R.id.brewing_stage);
 
-        rootView.setOnClickListener(new View.OnClickListener() {
+        rootView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onLongClick(View view) {
                 getActivity().finish();
+                return false;
             }
         });
 
@@ -67,9 +69,10 @@ public class BrewingFragment extends UserFragment {
         GPIODriver.write(bytesToSend, new GpioCallback() {
             @Override
             public boolean onGpioEdge(Gpio gpio) {
-
+                System.out.println("Getting interrupt");
                 stageIndex++;
-                if (stageIndex >= STAGES.length) {
+                System.out.println("Stage INdex: " + stageIndex);
+                if (stageIndex >= 1) {
                     new AlertDialog.Builder(getContext())
                             .setMessage("Enjoy your drink!")
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -81,6 +84,12 @@ public class BrewingFragment extends UserFragment {
                             .show();
                 } else {
                     stageView.setText(STAGES[stageIndex] + "...");
+                     try {
+                         gpio.unregisterGpioCallback(this);
+                        gpio.registerGpioCallback(this);
+                    } catch (IOException e) {
+                         e.printStackTrace();
+                     }
                 }
 
 

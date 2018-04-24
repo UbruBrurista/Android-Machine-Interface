@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
         android:textSize="@dimen/text_large"
+
         android:id="@+id/brewing_stage"
-        android:text="Preheating..."/>
+        android:text="Brewing..."/>
 
 </LinearLayout>
