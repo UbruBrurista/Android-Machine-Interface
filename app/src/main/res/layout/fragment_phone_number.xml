@@ -59,12 +59,41 @@
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/done"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@android:color/white"
-        android:id="@+id/done_button"/>
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
+
+        <Button
+            android:id="@+id/go_home_button"
+            style="@style/DarkButtonTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="@dimen/activity_margin"
+            android:layout_weight="2"
+            android:paddingLeft="@dimen/activity_margin"
+            android:paddingRight="@dimen/activity_margin"
+            android:text="Back to Home"
+            android:onClick="MainActivity"/>
+
+
+        <Button
+            android:text="@string/done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="@dimen/activity_margin"
+            android:layout_weight="2"
+            android:paddingLeft="@dimen/activity_margin"
+            android:paddingRight="@dimen/activity_margin"
+            android:id="@+id/done_button"/>
+
+    </LinearLayout>
 
 </LinearLayout>

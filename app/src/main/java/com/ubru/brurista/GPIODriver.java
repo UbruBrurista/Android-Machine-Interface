@@ -23,12 +23,12 @@ public class GPIODriver {
     public static class Commands {
 
         static int[] DISABLE_ALL = {1};
-        public static int[] START_FULL_CYCLE = {2, 1, 1, 1};
+        public static int[] START_FULL_CYCLE = {2, 1, 3, 1};  // type, size, temp
         static int[] GO_HOME = {3};
         static int[] GO_WORK = {4};
         static int[] GRIND = {5};
         static int[] PUMP = {6};
-
+        static int[] CLEAN_WATER = {7};
     }
 
     private static ToggleHandler timerHandler = new ToggleHandler();

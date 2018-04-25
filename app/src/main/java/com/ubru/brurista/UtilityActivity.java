@@ -40,6 +40,10 @@ public class UtilityActivity extends AppCompatActivity {
         GPIODriver.write(GPIODriver.Commands.DISABLE_ALL);
     }
 
+    public void cleanWater(View v) {
+        GPIODriver.write(GPIODriver.Commands.CLEAN_WATER);
+    }
+
     public void finish(View v) { this.finish(); }
 
 }

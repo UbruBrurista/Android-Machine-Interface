@@ -56,11 +56,11 @@
         android:weightSum="6"
         android:orientation="horizontal">
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:visibility="invisible"/>
+        <!--<Button-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:visibility="invisible"/>-->
 
         <Button
             style="@style/DarkButtonTheme"
@@ -81,6 +81,16 @@
             android:id="@+id/test_5"
             android:text="Run Pump"
             android:onClick="runPump"/>
+
+        <Button
+            style="@style/DarkButtonTheme"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:layout_margin="8dp"
+            android:id="@+id/test_6"
+            android:text="Clean water"
+            android:onClick="cleanWater"/>
 
 
     </LinearLayout>
