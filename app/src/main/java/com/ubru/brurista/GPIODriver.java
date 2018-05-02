@@ -16,6 +16,7 @@ public class GPIODriver {
 
     private static String PULSE_PIN = "BCM20";
     private static String START_STOP_PIN = "BCM21";
+//    private static String PULSE_PIN = "BCM16";
 
     private static Gpio PULSE_PGIO = null;
     private static Gpio START_STOP_GPIO = null;
@@ -23,7 +24,7 @@ public class GPIODriver {
     public static class Commands {
 
         static int[] DISABLE_ALL = {1};
-        public static int[] START_FULL_CYCLE = {2, 1, 3, 1};  // type, size, temp
+        public static int[] START_FULL_CYCLE = {8, 1, 3, 1};  // type, size, temp
         static int[] GO_HOME = {3};
         static int[] GO_WORK = {4};
         static int[] GRIND = {5};
